@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const {URL} = require('url')
 const path = require('path')
 const bodyParser = require('body-parser')
+const config = require('../config')
 
 const app = express()
 
@@ -12,7 +13,7 @@ app.set('trust proxy', true)
 app.use(express.static(path.join(__dirname, '../dist')))
 mongoose.Promise = Promise
 
-let mongoUrl = new URL(`mongodb://localhost/parser`)
+let mongoUrl = new URL(`mongodb://${config.db.host}/${config.db.collection}`)
 
 mongoose.connect(mongoUrl.href, function (error) {
   if (error) throw error
@@ -34,6 +35,6 @@ app.use(function (err, req, res, next) {
   res.status(500).json({error: err.message})
 })
 
-app.listen(8000, () => {
+app.listen(config.api.port, () => {
   console.log('server is running.')
 })

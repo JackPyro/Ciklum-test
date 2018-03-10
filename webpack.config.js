@@ -1,10 +1,12 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const config = require('./config')
+
 module.exports = {
   entry: [
     'react-hot-loader/patch',
-    'webpack-dev-server/client?http://localhost:3000',
+    `webpack-dev-server/client?http://${config.app.host}:${config.app.port}`,
     'webpack/hot/only-dev-server',
     'src/index.js',
   ],
@@ -52,14 +54,14 @@ module.exports = {
   devtool: 'source-map',
   devServer: {
     hot: true,
-    host: 'localhost',
+    host: config.app.host,
     historyApiFallback: true,
     publicPath: '/',
-    port: 3000,
+    port: config.app.port,
     proxy: [
       {
         path: '/api',
-        target: `http://localhost:8000/api`,
+        target: `http://${config.api.host}:${config.api.port}/api`,
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''

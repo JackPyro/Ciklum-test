@@ -1,10 +1,15 @@
 module.exports = {
-  HOST: 'localhost',
-  PORT: 3000,
-  API: 8000,
-  DB: {
+  app: {
     host: 'localhost',
-    port: '27017',
-    collection: 'events'
+    port: 3000
+  },
+  api: {
+    host: 'localhost',
+    port: 8000
+  },
+  db: {
+    host: 'localhost',
+    port: 27017, //default
+    collection: 'articles'
   }
 }
