@@ -64,6 +64,10 @@ router.get('/', async function (req, res, next) {
         articlesRes = _.filter(articlesRes, article => {
           return _.filter(article.suggestions, {isApproved: true}).length > 0
         })
+      } else {
+        articlesRes = _.filter(articlesRes, article => {
+          return _.filter(article.suggestions, {isApproved: false}).length === article.suggestions.length
+        })
       }
 
       res.json(articlesRes)

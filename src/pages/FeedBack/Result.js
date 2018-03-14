@@ -31,18 +31,18 @@ class Result extends Component {
   }
 
   send = (suggestion) => {
-    const {addSuggestion} = this.props
-    addSuggestion(suggestion)
+    const {addSuggestion, location} = this.props
+    addSuggestion(suggestion, location.search)
   }
 
   approve = (id) => {
     const {approveSuggestion} = this.props
-    approveSuggestion(id)
+    approveSuggestion(id, location.search)
   }
 
   remove = (originalText) => {
     const {removeSuggestion} = this.props
-    removeSuggestion(originalText)
+    removeSuggestion(originalText, location.search)
   }
 
   render () {

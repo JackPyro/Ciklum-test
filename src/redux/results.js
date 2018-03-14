@@ -37,46 +37,45 @@ const {results} = createActions({
   }
 })
 
-export const loadResults = (query = '') => {
+export const loadResults = (query) => {
   return (dispatch) => {
-    dispatch(results.load.request())
     axios.get(`${GET_RESULTS}${query}`)
       .then(res => dispatch(results.load.success(res.data)))
       .catch(error => dispatch(results.load.failed(error)))
   }
 }
 
-export const approveSuggestion = (id) => {
+export const approveSuggestion = (id, query) => {
   return (dispatch) => {
     dispatch(results.approve.request())
     axios.put(APPROVE(id))
       .then(res => {
         dispatch(results.approve.success())
-        dispatch(loadResults())
+        dispatch(loadResults(query))
       })
       .catch(error => dispatch(results.approve.failed(error)))
   }
 }
 
-export const addSuggestion = (suggestion) => {
+export const addSuggestion = (suggestion, query) => {
   return (dispatch) => {
     dispatch(results.add.request())
     axios.post(`${ADD_SUGGEST}`, {...suggestion})
       .then(res => {
         dispatch(results.add.success())
-        dispatch(loadResults())
+        dispatch(loadResults(query))
       })
       .catch(error => dispatch(results.add.failed(error)))
   }
 }
 
-export const removeSuggestion = (originalText) => {
+export const removeSuggestion = (originalText, query) => {
   return (dispatch) => {
     dispatch(results.delete.request())
     axios.post(DELETE, {originalText})
       .then(res => {
         dispatch(results.delete.success())
-        dispatch(loadResults())
+        dispatch(loadResults(query))
       })
       .catch(error => {
         dispatch(results.delete.failed(error))
