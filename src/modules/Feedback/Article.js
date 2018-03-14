@@ -18,7 +18,7 @@ class Article extends Component {
         </Card>
         <h2 dangerouslySetInnerHTML={{__html: article.title}}/>
         <div>
-          {article.paragraphs.map(text => <Paragraph text={text} url={url}/>)}
+          {article.paragraphs.map((text, index) => <Paragraph key={'p-' + index} text={text} url={url}/>)}
         </div>
       </div>
     )

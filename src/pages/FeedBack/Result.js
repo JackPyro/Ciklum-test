@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 import {
   getLoading,
   loadResults,
@@ -17,8 +19,15 @@ import Results from 'src/modules/Result/Results'
 }), {loadResults, approveSuggestion, addSuggestion, removeSuggestion})
 class Result extends Component {
   componentDidMount () {
-    const {loadResults} = this.props
-    loadResults()
+    const {loadResults, location} = this.props
+    loadResults(location.search)
+  }
+
+  componentDidUpdate (prevProps) {
+    const {location, loadResults} = this.props
+    if (prevProps.location.search !== location.search) {
+      loadResults(location.search)
+    }
   }
 
   send = (suggestion) => {
@@ -40,6 +49,10 @@ class Result extends Component {
     const {loading, results} = this.props
     return (
       <div>
+        <NavBar>
+          <QueryLink to="/fb/results?showApproved=true"> Show Completed </QueryLink>
+          <QueryLink to="/fb/results"> Show All </QueryLink>
+        </NavBar>
         <WithLoading
           loading={loading}
           component={
@@ -54,5 +67,16 @@ class Result extends Component {
     )
   }
 }
-
+const NavBar = styled.div`
+  display: flex;
+`
+const QueryLink = styled(Link)`
+  background-color: ${props => props.theme.colors.default};
+  text-decoration: none;
+  padding: 10px 15px;
+  margin: 5px;
+  display: block;
+  color: ${props => props.theme.colors.light}
+    
+`
 export default Result

@@ -37,10 +37,10 @@ const {results} = createActions({
   }
 })
 
-export const loadResults = () => {
+export const loadResults = (query = '') => {
   return (dispatch) => {
     dispatch(results.load.request())
-    axios.get(`${GET_RESULTS}`)
+    axios.get(`${GET_RESULTS}${query}`)
       .then(res => dispatch(results.load.success(res.data)))
       .catch(error => dispatch(results.load.failed(error)))
   }

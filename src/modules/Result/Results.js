@@ -14,11 +14,12 @@ class Results extends Component {
   }
 
   render () {
-    const {results, approve, remove} = this.props
+    const {results = [], approve, remove} = this.props
+
     return (
       <Wrapper>
-        {results.map(result => (
-          <Card>
+        {results.map((result, index) => (
+          <Card key={'result-' + index}>
             <Link to={`/fb?articleURL=${result.url}`}> Link to article </Link>
             <CardHeader>
               <Title>Original Text</Title>
@@ -29,6 +30,7 @@ class Results extends Component {
               <Title>User Suggestions</Title>
               {result.suggestions.map(suggestion => (
                 <Suggestion
+                  key={suggestion._id}
                   suggestion={suggestion}
                   approve={approve}
                 />
